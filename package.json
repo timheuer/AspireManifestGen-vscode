@@ -1,0 +1,69 @@
+{
+  "name": "aspire-gen",
+  "displayName": ".NET Aspire Manifest generator",
+  "description": "Generates a .NET Aspire deployment manifest",
+  "author": "Tim Heuer",
+  "publisher": "TimHeuer",
+  "license": "MIT",
+  "preview": true,
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timheuer/AspireManifestGen-vscode"
+  },
+  "qna": "https://github.com/timheuer/AspireManifestGen-vscode/issues",
+  "homepage": "https://github.com/timheuer/AspireManifestGen-vscode",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aspire-gen.generate",
+        "title": "Generate .NET Aspire Manifest",
+        "category": "Aspire"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "aspire-gen.generate",
+          "when": "resourceFilename =~ /.*\\.AppHost\\.csproj$/"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "aspire-gen.generate",
+          "when": "resourceFilename =~ /.*\\.AppHost\\.csproj$/",
+          "group": "2_workspace"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "deploy": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.84.0",
+    "@types/mocha": "^10.0.3",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "eslint": "^8.52.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2",
+    "@vscode/test-electron": "^2.3.6"
+  }
+}
