@@ -6,7 +6,8 @@
   "publisher": "TimHeuer",
   "license": "MIT",
   "preview": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "icon": "Icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/timheuer/AspireManifestGen-vscode"
