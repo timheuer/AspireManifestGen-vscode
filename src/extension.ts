@@ -1,13 +1,14 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as fs from 'fs';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('aspire-gen.generate', (uri) => {
+	let disposable = vscode.commands.registerCommand('aspire-gen.generate', async (uri) => {
 
 		// if the uri is undefined, get the uri for the document in the active editor
 		if (!uri) {
@@ -31,11 +32,11 @@ export function activate(context: vscode.ExtensionContext) {
 			terminal.sendText(`dotnet msbuild /t:GenerateAspireManifest /p:AspireManifestPublishOutputPath=${manifestFile?.fsPath} ${uri.fsPath}`);
 		}
 
+		await waitForFileCreation(manifestFile?.fsPath || '');
+
 		// Open the manifestFile in an editor
 		if (manifestFile) {
-			vscode.workspace.openTextDocument(manifestFile).then((document) => {
-				vscode.window.showTextDocument(document);
-			});
+			await vscode.window.showTextDocument(manifestFile);
 		}
 	});
 
@@ -44,3 +45,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() { }
+
+function waitForFileCreation(filePath: string): Promise<void> {
+	const outputChannel = vscode.window.createOutputChannel('.NET Aspire');
+	return new Promise((resolve) => {
+		const interval = setInterval(() => {
+			outputChannel.appendLine('Checking for file existence...');
+			if (fs.existsSync(filePath)) {
+				outputChannel.appendLine('Created file!');
+				clearInterval(interval);
+				resolve();
+			}
+		}, 1000); // Check every second for file existence
+	});
+}
