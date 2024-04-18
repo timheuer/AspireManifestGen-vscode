@@ -25,7 +25,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Get the active terminal or create a new one
 		const terminal = vscode.window.activeTerminal || vscode.window.createTerminal();
-		const manifestFile = workspaceFolder ? vscode.Uri.joinPath(workspaceFolder.uri, '.aspire') : undefined;
+		const manifestPath = vscode.workspace.getConfiguration('aspire-gen').get<string>('manifestPath') ?? '';
+		const manifestFile = workspaceFolder ? vscode.Uri.joinPath(workspaceFolder.uri, manifestPath) : undefined;
 		terminal.show();
 		terminal.sendText(`cd ${workspaceFolder?.uri.fsPath}`);
 		if (uri) {

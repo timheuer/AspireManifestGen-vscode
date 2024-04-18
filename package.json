@@ -6,7 +6,7 @@
   "publisher": "TimHeuer",
   "license": "MIT",
   "preview": true,
-  "version": "0.2.1",
+  "version": "0.3.0",
   "icon": "Icon.png",
   "repository": {
     "type": "git",
@@ -44,6 +44,15 @@
           "group": "2_workspace"
         }
       ]
+    },
+    "configuration": {
+      "title": ".NET Aspire",
+      "properties": {
+        "aspire-gen.manifestPath": {
+          "type": "string",
+          "description": "Directory path (relative) to output the manifest file"
+        }
+      }
     }
   },
   "scripts": {
