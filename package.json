@@ -1,12 +1,12 @@
 {
   "name": "aspire-gen",
-  "displayName": ".NET Aspire Manifest generator",
-  "description": "Generates a .NET Aspire deployment manifest",
+  "displayName": "Aspire Manifest generator",
+  "description": "Generates an Aspire deployment manifest",
   "author": "Tim Heuer",
   "publisher": "TimHeuer",
   "license": "MIT",
   "preview": true,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "icon": "Icon.png",
   "repository": {
     "type": "git",
@@ -20,13 +20,13 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [ ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "aspire-gen.generate",
-        "title": "Generate .NET Aspire Manifest",
+        "title": "Generate Aspire Manifest",
         "category": "Aspire"
       }
     ],
@@ -46,7 +46,7 @@
       ]
     },
     "configuration": {
-      "title": ".NET Aspire",
+      "title": "Aspire",
       "properties": {
         "aspire-gen.manifestPath": {
           "type": "string",
