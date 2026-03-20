@@ -2,16 +2,20 @@
   "name": "aspire-gen",
   "displayName": "Aspire Manifest generator",
   "description": "Generates an Aspire deployment manifest",
-  "author": "Tim Heuer",
-  "publisher": "TimHeuer",
+  "author": {
+    "name": "Tim Heuer",
+    "url": "https://github.com/timheuer"
+  },
+  "publisher": "timheuer",
   "license": "MIT",
   "preview": true,
-  "version": "0.3.1",
-  "icon": "Icon.png",
+  "version": "0.0.0-placeholder",
+  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/timheuer/AspireManifestGen-vscode"
   },
+  "bugs": "https://github.com/timheuer/AspireManifestGen-vscode/issues",
   "qna": "https://github.com/timheuer/AspireManifestGen-vscode/issues",
   "homepage": "https://github.com/timheuer/AspireManifestGen-vscode",
   "engines": {
