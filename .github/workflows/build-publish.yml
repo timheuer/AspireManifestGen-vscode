@@ -64,7 +64,7 @@ jobs:
             - name: Upload artifact
               uses: actions/upload-artifact@v7
               with:
-                  name: ${{ steps.extension.outputs.vsix_name }}
+                  name: ${{ github.event.repository.name}}.vsix
                   path: ./*.vsix
 
             - name: Tag and Release
