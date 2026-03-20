@@ -17,20 +17,13 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
               with:
                   fetch-depth: 0
 
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v6
               with:
-                  node-version: 20
-
-            - name: Read extension metadata
-              id: extension
-              shell: bash
-              run: |
-                  echo "marketplace_id=$(node -p \"const pkg = require('./package.json'); pkg.publisher + '.' + pkg.name\")" >> "$GITHUB_OUTPUT"
-                  echo "vsix_name=${{ github.event.repository.name }}.vsix" >> "$GITHUB_OUTPUT"
+                  node-version: 24
 
             - name: Install dependencies
               run: npm install
@@ -50,7 +43,7 @@ jobs:
 
             - name: Package
               run: |
-                  vsce package -o "./${{ steps.extension.outputs.vsix_name }}"
+                  vsce package -o ./${{ github.event.repository.name}}.vsix
 
             - name: Publish
               if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -58,21 +51,25 @@ jobs:
               env:
                   VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
-            - name: Marketplace Link
+            - name: 🔗 Marketplace Link
               if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-              shell: pwsh
               run: |
-                  Write-Host "::notice::Published to VS Code Marketplace: https://marketplace.visualstudio.com/items?itemName=${{ steps.extension.outputs.marketplace_id }}"
+                  echo "## 🚀 Published Extension" >> $GITHUB_STEP_SUMMARY
+                  echo "" >> $GITHUB_STEP_SUMMARY
+                  echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+                  echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+                  echo "| **Version** | ${{ steps.nbgv.outputs.SimpleVersion }} |" >> $GITHUB_STEP_SUMMARY
+                  echo "| **Marketplace** | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=${{ steps.extension.outputs.marketplace_id }}) |" >> $GITHUB_STEP_SUMMARY
 
             - name: Upload artifact
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                   name: ${{ steps.extension.outputs.vsix_name }}
                   path: ./*.vsix
 
             - name: Tag and Release
               if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v2
               with:
                   body: Release ${{ steps.nbgv.outputs.SimpleVersion }}
                   tag_name: ${{ steps.nbgv.outputs.SimpleVersion }}
