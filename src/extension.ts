@@ -48,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() { }
 
 function waitForFileCreation(filePath: string): Promise<void> {
-	const outputChannel = vscode.window.createOutputChannel('.NET Aspire');
+	const outputChannel = vscode.window.createOutputChannel('Aspire Manifest Generator', { log: true });
 	return new Promise((resolve) => {
 		const interval = setInterval(() => {
 			outputChannel.appendLine('Checking for file existence...');
