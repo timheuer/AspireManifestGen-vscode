@@ -29,7 +29,7 @@ jobs:
               id: extension
               shell: bash
               run: |
-                  echo "marketplace_id=$(node -p \"const pkg = require('./package.json'); `${pkg.publisher}.${pkg.name}`\")" >> "$GITHUB_OUTPUT"
+                  echo "marketplace_id=$(node -p \"const pkg = require('./package.json'); pkg.publisher + '.' + pkg.name\")" >> "$GITHUB_OUTPUT"
                   echo "vsix_name=${{ github.event.repository.name }}.vsix" >> "$GITHUB_OUTPUT"
 
             - name: Install dependencies
